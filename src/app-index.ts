@@ -3,7 +3,7 @@ import { customElement } from 'lit/decorators.js';
 import { Router } from '@vaadin/router';
 
 import './pages/app-home';
-import './components/header';
+import './components/pwa-header/pwa-header';
 import './styles/global.css';
 
 const BASE_URL: string = (import.meta.env.BASE_URL).length > 2 ? (import.meta.env.BASE_URL).slice(1,-1) : (import.meta.env.BASE_URL);
@@ -70,10 +70,10 @@ export class AppIndex extends LitElement {
         children: [
           { path: '', component: 'app-home' },
           {
-            path: 'about',
-            component: 'app-about',
+            path: 'game',
+            component: 'app-game',
             action: async () => {
-              await import('./pages/app-about/app-about.js');
+              await import('./pages/app-game/app-game');
             },
           }
         ],

@@ -2,9 +2,10 @@ import { LitElement, css, html } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 
 import '@shoelace-style/shoelace/dist/components/button/button.js';
-@customElement('app-header')
-export class AppHeader extends LitElement {
-  @property({ type: String }) title = 'PWA Starter';
+import {Router} from "@vaadin/router";
+@customElement('pwa-header')
+export class PwaHeader extends LitElement {
+  @property({ type: String }) title = 'PWA Autoclicker App';
 
   @property({ type: Boolean}) enableBack: boolean = false;
 
@@ -43,7 +44,7 @@ export class AppHeader extends LitElement {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        width: 12em;
+        width: 17em;
       }
 
       @media(prefers-color-scheme: light) {
@@ -58,6 +59,10 @@ export class AppHeader extends LitElement {
     `;
   }
 
+  handleButtonClick() {
+    Router.go("/");
+  }
+
   constructor() {
     super();
   }
@@ -65,12 +70,10 @@ export class AppHeader extends LitElement {
   render() {
     return html`
       <header>
-
         <div id="back-button-block">
-          ${this.enableBack ? html`<sl-button href="${(import.meta as any).env.BASE_URL}">
-            Back
-          </sl-button>` : null}
-
+          ${this.enableBack ? html`
+            <button class="back" @click="${() => this.handleButtonClick()}" class="primary"> < Back</button>
+            ` : null}
           <h1>${this.title}</h1>
         </div>
       </header>

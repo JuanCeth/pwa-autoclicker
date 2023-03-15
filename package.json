@@ -1,7 +1,7 @@
 {
-  "name": "pwa-starter",
+  "name": "pwa-autoclicker",
   "version": "0.0.1",
-  "description": "A starter kit for building PWAs!",
+  "description": "PWA Autoclicker example app",
   "main": "index.js",
   "scripts": {
     "dev-server": "vite --open",
