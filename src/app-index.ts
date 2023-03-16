@@ -4,6 +4,8 @@ import { Router } from '@vaadin/router';
 
 import './pages/app-home';
 import './components/pwa-header/pwa-header';
+import './components/pwa-button/pwa-button';
+import './components/pwa-input/pwa-input';
 import './styles/global.css';
 
 const BASE_URL: string = (import.meta.env.BASE_URL).length > 2 ? (import.meta.env.BASE_URL).slice(1,-1) : (import.meta.env.BASE_URL);

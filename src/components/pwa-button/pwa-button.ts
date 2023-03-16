@@ -2,9 +2,7 @@ import { LitElement, css, html } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 
 @customElement('pwa-button')
-export class PwaHeader extends LitElement {
-    @property({ type: String }) label = 'PWA Autoclicker App';
-
+export class PwaButton extends LitElement {
     @property({ type: String, reflect: true }) type = 'primary';
 
     @property({ type: Boolean, reflect: true }) disabled = false;
@@ -15,12 +13,12 @@ export class PwaHeader extends LitElement {
             align-items: center;
             background-color: grey;
             border: 2px solid darkgrey;
-            border-radius: 8px;
+            border-radius: 4px;
             cursor: pointer;
             color: white;
             height: 40px;
             margin: 4px 2px;
-            padding: 10px 20px;
+            padding: 10px 40px;
             text-align: center;
             text-decoration: none;
           }
@@ -38,15 +36,27 @@ export class PwaHeader extends LitElement {
             cursor: default;
             opacity: 0.5;
             transform: none;
-          } 
-    `;
+          }
+
+          .primary {
+            background-color: #004481;
+            border: 2px solid lightskyblue;
+          }
+          
+          .secondary {
+            background-color: darkgrey;
+            border: 2px solid black;
+            padding: 10px 20px;
+          }
+
+        `;
     }
 
     constructor() {
         super();
     }
 
-    handleClick(event) {
+    handleClick(event: CustomEvent) {
         this.dispatchEvent(new CustomEvent('pwa-button-click',
             {
                 bubbles: true,
@@ -57,7 +67,7 @@ export class PwaHeader extends LitElement {
 
     render() {
         return html`
-            <button class="${this.type}" href="${this.href}" disabled="${this.disabled}" @click="${(e) => this.handleClick(e)}"><slot></slot></button>
+            <button class="${this.type}" .disabled="${this.disabled}" @click="${(e: CustomEvent) => this.handleClick(e)}"><slot></slot></button>
     `;
     }
 }

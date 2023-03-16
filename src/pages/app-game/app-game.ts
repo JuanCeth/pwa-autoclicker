@@ -1,13 +1,8 @@
 import { LitElement, css, html } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
-
-// You can also import styles from another file
-// if you prefer to keep your CSS seperate from your component
 import { styles } from './app-game-styles';
+import {Router} from "@vaadin/router";
 
-import { styles as sharedStyles } from '../../styles/shared-styles'
-
-import '@shoelace-style/shoelace/dist/components/card/card.js';
 
 @customElement('app-game')
 export class AppGame extends LitElement {
@@ -16,82 +11,106 @@ export class AppGame extends LitElement {
 
   @property({ type: Boolean}) canBuyAutoClicks = false;
 
+  @property({ type: Object }) userData = { name: '', numberOfClicks: 0, autoClicksBought: 0, autoClickerCost: 0 };
+
+  private autoClicksBought = 0;
+  private autoClickerCost = 0;
+
+
   static get styles() {
     return [
       styles,
       css`
+      .user-section {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        flex-direction: column;
+        padding-top: 40px;
+      }
+        
       #mainContainer {
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        padding-top: 200px;
+        padding-top: 40px;
       }
 
-      button {
+      .goBack-section {
+        display: flex;
+        justify-content: flex-end;
         align-items: center;
-        background-color: grey;
-        border: 2px solid darkgrey;
-        border-radius: 4px;
-        cursor: pointer;
-        color: white;
-        height: 40px;
-        margin: 4px 2px;
-        padding: 10px 40px;
-        text-align: center;
-        text-decoration: none;
+        width: 100%;
+        padding-top: 12px;
       }
-
-      button:hover {
-        box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
-      }
-
-      button:active {
-        transform: scale(0.98);
-      }
-
-      button[disabled] {
-        box-shadow: none;
-        cursor: default;
-        opacity: 0.5;
-        transform: none;
-      }
-      .primary {
-        background-color: #004481;
-        border: 2px solid lightskyblue;
-      }
-      `];
+    `];
   }
-
 
   constructor() {
     super();
   }
 
+  async firstUpdated() {
+    const storedData = localStorage.getItem('userData') || '';
+    this.userData = JSON.parse(storedData)
+    this.setInternalVars();
+  }
+
+  setInternalVars() {
+    this.numberOfClicks = this.userData.numberOfClicks;
+    this.autoClicksBought = this.userData.autoClicksBought;
+    this.autoClickerCost = this.userData.autoClickerCost;
+  }
+
   handleButtonClick(autoclick: Boolean) {
     if (autoclick) {
-      this.numberOfClicks = this.numberOfClicks + 50;
+      this.autoClicksBought = this.autoClicksBought + 1;
+      this.numberOfClicks = this.numberOfClicks - this.autoClickerCost;
       this.canBuyAutoClicks = false;
     } else {
-      this.canBuyAutoClicks = this.numberOfClicks === 50 || this.numberOfClicks === 100 || this.numberOfClicks === 200;
       this.numberOfClicks = this.numberOfClicks + 1;
+      this.canBuyAutoClicks = this.numberOfClicks >= this.autoClickerCost;
     }
   }
 
-  renderBuyAutoClicks() {
+  calculateAutoClickerCost() {
+    const autoClickerBaseCost = 20;
+    const numAutoClickers = this.autoClicksBought;
+    this.autoClickerCost = autoClickerBaseCost + autoClickerBaseCost * numAutoClickers;
+    return this.autoClickerCost;
+  }
+
+  renderAutoClicksBought() {
     return html`
-        <button @click="${() => this.handleButtonClick(true)}" ?disabled="${!this.canBuyAutoClicks}" class="primary">Buy Auto Clicks</button>
-      </div>
+      <h2>Autoclicks bought: ${this.autoClicksBought}</h2>
     `;
+  }
+
+  goBack() {
+    this.userData = {
+      name: this.userData.name,
+      numberOfClicks: this.numberOfClicks,
+      autoClicksBought: this.autoClicksBought,
+      autoClickerCost: this.autoClickerCost
+    };
+    localStorage.setItem('userData', JSON.stringify(this.userData));
+    Router.go("/");
   }
 
   render() {
     return html`
-      <pwa-header ?enableBack="${true}"></pwa-header>
+      <pwa-header></pwa-header>
+      <div class="goBack-section">
+            <pwa-button type="secondary" @pwa-button-click="${() => this.goBack()}">< Back</pwa-button>
+      </div>
+      <div class="user-section"><h3>Hi ${this.userData.name}</h3></div>
       <div id="mainContainer">
         <h2>Number of clicks: ${this.numberOfClicks}</h2>
-        <button @click="${() => this.handleButtonClick(false)}"  class="primary">Click Request</button>
-        ${this.canBuyAutoClicks ? this.renderBuyAutoClicks() : ''}
+        ${this.autoClicksBought > 0 ? this.renderAutoClicksBought() : ''}
+        <pwa-button type="primary" @pwa-button-click="${() => this.handleButtonClick(false)}">Click Request</pwa-button>
+        <pwa-button type="primary" ?disabled="${!this.canBuyAutoClicks}"
+                    @pwa-button-click="${() => this.handleButtonClick(true)}">Buy Auto Clicks (${this.calculateAutoClickerCost()})</pwa-button>
       </div>
     `;
   }

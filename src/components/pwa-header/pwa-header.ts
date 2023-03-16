@@ -1,8 +1,6 @@
 import { LitElement, css, html } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 
-import '@shoelace-style/shoelace/dist/components/button/button.js';
-import {Router} from "@vaadin/router";
 @customElement('pwa-header')
 export class PwaHeader extends LitElement {
   @property({ type: String }) title = 'PWA Autoclicker App';
@@ -12,55 +10,30 @@ export class PwaHeader extends LitElement {
   static get styles() {
     return css`
       header {
-        display: flex;
-        justify-content: space-between;
         align-items: center;
         background: var(--app-color-primary);
         color: white;
-        height: 4em;
+        display: flex;
+        height: env(titlebar-area-height, 50px);
+        justify-content: space-between;
+        left: env(titlebar-area-x, 0);
         padding-left: 16px;
         padding-top: 12px;
-
         position: fixed;
-        left: env(titlebar-area-x, 0);
         top: env(titlebar-area-y, 0);
-        height: env(titlebar-area-height, 50px);
-        width: env(titlebar-area-width, 100%);
+        width: env(titlebar-area-width, 60%);
         -webkit-app-region: drag;
       }
 
       header h1 {
-        margin-top: 0;
-        margin-bottom: 0;
+        color: black;
         font-size: 20px;
         font-weight: bold;
+        margin-bottom: 0;
+        margin-top: 0;
       }
-
-      nav a {
-        margin-left: 10px;
-      }
-
-      #back-button-block {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 17em;
-      }
-
-      @media(prefers-color-scheme: light) {
-        header {
-          color: black;
-        }
-
-        nav a {
-          color: initial;
-        }
-      }
+      
     `;
-  }
-
-  handleButtonClick() {
-    Router.go("/");
   }
 
   constructor() {
@@ -71,9 +44,6 @@ export class PwaHeader extends LitElement {
     return html`
       <header>
         <div id="back-button-block">
-          ${this.enableBack ? html`
-            <button class="back" @click="${() => this.handleButtonClick()}" class="primary"> < Back</button>
-            ` : null}
           <h1>${this.title}</h1>
         </div>
       </header>
