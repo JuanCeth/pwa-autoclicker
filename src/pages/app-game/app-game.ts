@@ -22,7 +22,7 @@ export class AppGame extends LitElement {
 
   private autoClicksBought = 0;
   private autoClickerCost = 0;
-  private bonusTimeout: any;
+  private bonusInterval: any;
 
 
   static get styles() {
@@ -114,8 +114,7 @@ export class AppGame extends LitElement {
    * Sets the autoclicker bonus with an interval
    */
   setAutoclickerBonus() {
-    this.bonusTimeout = setInterval(() => {
-      console.log('se ejecuta el timeout');
+    this.bonusInterval = setInterval(() => {
       this.numberOfClicks = this.numberOfClicks + 1;
     }, 100);
   }
@@ -140,7 +139,7 @@ export class AppGame extends LitElement {
       autoClickerCost: this.autoClickerCost
     };
     localStorage.setItem('userData', JSON.stringify(this.userData));
-    clearInterval(this.bonusTimeout)
+    this.bonusInterval && clearInterval(this.bonusInterval);
     Router.go("/");
   }
 

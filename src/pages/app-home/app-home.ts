@@ -56,10 +56,23 @@ export class AppHome extends LitElement {
     this.submitForm();
   }
 
+  getAllStoreddData() {
+    let values = []
+    let keys = Object.keys(localStorage)
+    let i = keys.length;
+
+    while ( i-- ) {
+      values.push( localStorage.getItem(keys[i]));
+    }
+    console.log('stored data', values);
+    return values;
+  }
+
   /**
    * Navigates to next step saving the actual data of the user
    */
   navigateToGame() {
+    this.getAllStoreddData();
     const storedData = localStorage.getItem('userData') || '';
     this.userData = JSON.parse(storedData)
      const userDataToStore = {
