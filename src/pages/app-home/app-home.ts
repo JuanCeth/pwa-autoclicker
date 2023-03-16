@@ -1,37 +1,22 @@
-import { LitElement, css, html } from 'lit';
+import { LitElement, html } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 import { Router } from '@vaadin/router';
-import { styles } from '../styles/shared-styles';
+import { styles } from '../../styles/shared-styles';
+import { homeStyles } from "./app-home-styles";
 
 
 @customElement('app-home')
 export class AppHome extends LitElement {
-
-  @property() message = 'Welcome!';
-
+  /**
+   * Prop to set the input value of the component
+   */
   @property({ type: String, reflect: true }) inputValue = '';
 
-  @property({type: Boolean}) buttonDisabled = true;
-
   private userData: any;
+  private pwaInputElement: any;
 
   static get styles() {
-    return [
-      styles,
-      css`
-        
-      #mainContainer {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        padding-top: 50px;
-      }
-        
-      .new-player-section {
-        margin-bottom: 50px;
-      }
-    `];
+    return [ styles, homeStyles];
   }
 
   constructor() {
@@ -42,14 +27,38 @@ export class AppHome extends LitElement {
     console.log('This is the home page');
   }
 
-  handleInputValueChange(event: any) {
-    this.inputValue = event.detail?.value;
+  /**
+   * Gets the html element of pwa-input
+   */
+  get inputElement() {
+    if (!this.pwaInputElement) {
+      this.pwaInputElement = this.shadowRoot?.querySelector('pwa-input');
+    }
+
+    return this.pwaInputElement;
   }
 
+  /**
+   * Handles the input value change
+   * @param event
+   */
+  handleInputValueChange(event: any) {
+    this.inputValue = event.detail?.value;
+    this.inputValue.length ?
+        this.inputElement.setValidationState('default', '') :
+        this.inputElement.setValidationState('error', 'Required field, you must introduce a name');
+  }
+
+  /**
+   * Handles the button click and submit the form
+   */
   handleButtonClick() {
     this.submitForm();
   }
 
+  /**
+   * Navigates to next step saving the actual data of the user
+   */
   navigateToGame() {
     const storedData = localStorage.getItem('userData') || '';
     this.userData = JSON.parse(storedData)
@@ -63,9 +72,11 @@ export class AppHome extends LitElement {
     Router.go("/game");
   }
 
+  /**
+   * Submits the form, validating the introduced data.
+   */
   submitForm() {
-    // Here we have to validate the input, if it's ok we navigate
-    if(this.inputValue && this.inputValue.length && this.inputValue !== '') {
+    if(this.validateInput()) {
       this.dispatchEvent(new CustomEvent('pwa-button-click',
           {
             bubbles: true,
@@ -76,16 +87,28 @@ export class AppHome extends LitElement {
           })
       )
       this.navigateToGame();
-      // if not we have to show error at input
     } else {
-      console.log('Please review the introduced text');
+      this.inputElement.setValidationState('error', 'Required field, you must introduce a name');
     }
   }
 
+  /**
+   * Validates the input data
+   */
+  validateInput() {
+    return this.inputValue && this.inputValue.length;
+  }
+
+  /**
+   * Handles the input key up action, taking into account enter key
+   * @param event
+   */
   handleInputKeyUp(event: any){
-    /// Control for enter button press
+    /// Control for enter button pressing.
     if (event.detail?.keyCode === 13) {
       this.submitForm();
+    } else {
+      this.inputElement.setValidationState('default', '');
     }
   }
 
@@ -94,7 +117,7 @@ export class AppHome extends LitElement {
       <pwa-header></pwa-header>
       <main>
         <div id="mainContainer">
-          <img height="200" width="200" src="https://png.pngtree.com/element_our/png_detail/20181119/male-medical-doctor-icon-png_242549.jpg">
+          <img height="150" width="150" src="https://png.pngtree.com/element_our/png_detail/20181119/male-medical-doctor-icon-png_242549.jpg">
           <div class="new-player-section"><h2>Create new player</h2></div>
           <pwa-input placeholder="Introduce your name" required="true" validate="true"
                       @pwa-input-change="${(e: CustomEvent) => this.handleInputValueChange(e)}" @pwa-input-keyup="${(e: KeyboardEvent) => this.handleInputKeyUp(e)}"></pwa-input>
