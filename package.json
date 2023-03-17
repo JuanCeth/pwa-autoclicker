@@ -1,5 +1,5 @@
 {
-  "name": "pwa-starter",
+  "name": "pwa-autoclicker",
   "version": "1.0.0",
   "description": "PWA Autoclicker example app",
   "main": "index.js",
