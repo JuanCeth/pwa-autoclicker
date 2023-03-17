@@ -2,6 +2,8 @@ import { LitElement, css, html } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 import { styles } from './app-game-styles';
 import {Router} from "@vaadin/router";
+import { GameService } from '../../services/game-service';
+import { StorageService } from '../../services/storage-service';
 
 
 @customElement('app-game')
@@ -60,8 +62,9 @@ export class AppGame extends LitElement {
   }
 
   async firstUpdated() {
-    const storedData = localStorage.getItem('userData') || '';
-    this.userData = JSON.parse(storedData)
+    const playerName = StorageService.getGamePlayerName() || '';
+    console.log('playerName', playerName);
+    this.userData = StorageService.getUserData(playerName);
     this.setInternalVars();
   }
 
@@ -97,16 +100,14 @@ export class AppGame extends LitElement {
    * Checks if the user can buy autoclicks
    */
   canBuyAutoclicks() {
-    return this.numberOfClicks >= this.autoClickerCost;
+    return GameService.checkCanBuyAutoclicker(this.numberOfClicks, this.autoClickerCost);
   }
 
   /**
    * Calculates the cost of the autoclicker
    */
   calculateAutoClickerCost() {
-    const autoClickerBaseCost = 20;
-    const numAutoClickers = this.autoClicksBought;
-    this.autoClickerCost = autoClickerBaseCost + autoClickerBaseCost * numAutoClickers;
+    this.autoClickerCost = GameService.calculateAutoClickerCost(this.autoClicksBought)
     return this.autoClickerCost;
   }
 
@@ -138,7 +139,7 @@ export class AppGame extends LitElement {
       autoClicksBought: this.autoClicksBought,
       autoClickerCost: this.autoClickerCost
     };
-    localStorage.setItem('userData', JSON.stringify(this.userData));
+    StorageService.saveUserData(this.userData);
     this.bonusInterval && clearInterval(this.bonusInterval);
     const path = (import.meta as any).env.BASE_URL
     Router.go(path);

@@ -3,6 +3,7 @@ import { property, customElement } from 'lit/decorators.js';
 import { Router } from '@vaadin/router';
 import { styles } from '../../styles/shared-styles';
 import { homeStyles } from "./app-home-styles";
+import { StorageService } from "../../services/storage-service";
 
 
 @customElement('app-home')
@@ -59,15 +60,15 @@ export class AppHome extends LitElement {
    * Navigates to next step saving the actual data of the user
    */
   navigateToGame() {
-    const storedData = localStorage.getItem('userData') || '{ "name": "", "numberOfClicks": "0", "autoClicksBought": "0", "autoClickersCost": "0"}';
-    this.userData = JSON.parse(storedData);
+    this.userData = StorageService.getUserData(this.inputValue);
      const userDataToStore = {
        name: this.inputValue === this.userData.name ? this.userData.name : this.inputValue,
        numberOfClicks: this.inputValue === this.userData.name ? this.userData.numberOfClicks : 0,
        autoClicksBought: this.inputValue === this.userData.name ? this.userData.autoClicksBought : 0,
        autoClickersCost: this.inputValue === this.userData.name ? this.userData.autoClickersCost : 0
      }
-    localStorage.setItem('userData', JSON.stringify(userDataToStore));
+    StorageService.saveUserData(userDataToStore);
+    StorageService.saveGamePlayerName(this.inputValue);
     const path = (import.meta as any).env.BASE_URL + 'game'
     Router.go(path);
   }
