@@ -60,7 +60,6 @@ export class AppHome extends LitElement {
    */
   navigateToGame() {
     const storedData = localStorage.getItem('userData') || '{ "name": "", "numberOfClicks": "0", "autoClicksBought": "0", "autoClickersCost": "0"}';
-    console.log('storedData', storedData);
     this.userData = JSON.parse(storedData);
      const userDataToStore = {
        name: this.inputValue === this.userData.name ? this.userData.name : this.inputValue,
@@ -69,7 +68,8 @@ export class AppHome extends LitElement {
        autoClickersCost: this.inputValue === this.userData.name ? this.userData.autoClickersCost : 0
      }
     localStorage.setItem('userData', JSON.stringify(userDataToStore));
-    Router.go("/game");
+    const path = (import.meta as any).env.BASE_URL + 'game'
+    Router.go(path);
   }
 
   /**

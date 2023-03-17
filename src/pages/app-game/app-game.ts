@@ -140,7 +140,8 @@ export class AppGame extends LitElement {
     };
     localStorage.setItem('userData', JSON.stringify(this.userData));
     this.bonusInterval && clearInterval(this.bonusInterval);
-    Router.go("/");
+    const path = (import.meta as any).env.BASE_URL
+    Router.go(path);
   }
 
   render() {
