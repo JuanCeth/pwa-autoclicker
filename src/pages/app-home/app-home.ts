@@ -40,7 +40,7 @@ export class AppHome extends LitElement {
 
   /**
    * Handles the input value change
-   * @param event
+   * @param event input change event
    */
   handleInputValueChange(event: any) {
     this.inputValue = event.detail?.value;
@@ -102,7 +102,7 @@ export class AppHome extends LitElement {
 
   /**
    * Handles the input key up action, taking into account enter key
-   * @param event
+   * @param event keyup event
    */
   handleInputKeyUp(event: any){
     /// Control for enter button pressing.

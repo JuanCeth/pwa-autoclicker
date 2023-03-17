@@ -3,10 +3,10 @@ import { css } from 'lit';
 
 export const homeStyles = css`
   #mainContainer {
-    display: flex;
-    justify-content: center;
     align-items: center;
+    display: flex;
     flex-direction: column;
+    justify-content: center;
     padding-top: 40px;
   }
 

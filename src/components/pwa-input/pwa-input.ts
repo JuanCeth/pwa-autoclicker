@@ -79,7 +79,8 @@ export class PwaInput extends LitElement {
                 detail: {
                     value: this.value
                 }
-            }));
+            })
+        );
     }
 
     /**
@@ -91,9 +92,10 @@ export class PwaInput extends LitElement {
 
     render() {
         return html`
-            <input class="${this.inputState}" .type="${this.type}" .placeholder="${this.placeholder}" .value="${this.value}" ?required="${this.required}" ?validate="${this.validate}"
-                   ?disabled="${this.disabled}" @change="${(e: CustomEvent) => this.handleInputChange(e)}" @keyup="${(e: KeyboardEvent) => this.handleInputKeyUp(e)}"></input>
+            <input class="${this.inputState}" .type="${this.type}" .placeholder="${this.placeholder}" .value="${this.value}"
+                   ?required="${this.required}" ?validate="${this.validate}" ?disabled="${this.disabled}"
+                   @change="${(e: CustomEvent) => this.handleInputChange(e)}" @keyup="${(e: KeyboardEvent) => this.handleInputKeyUp(e)}"></input>
             ${this.inputState === 'error' ? this.renderErrorMessage() : ''}
-    `;
+        `;
     }
 }

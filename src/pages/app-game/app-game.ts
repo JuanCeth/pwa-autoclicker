@@ -1,4 +1,4 @@
-import { LitElement, css, html } from 'lit';
+import { LitElement, html } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 import { styles } from './app-game-styles';
 import {Router} from "@vaadin/router";
@@ -26,35 +26,8 @@ export class AppGame extends LitElement {
   private autoClickerCost = 0;
   private bonusInterval: any;
 
-
   static get styles() {
-    return [
-      styles,
-      css`
-      .user-section {
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        flex-direction: column;
-        padding-top: 40px;
-      }
-        
-      #mainContainer {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        padding-top: 40px;
-      }
-
-      .goBack-section {
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        width: 100%;
-        padding-top: 12px;
-      }
-    `];
+    return styles;
   }
 
   constructor() {
@@ -63,7 +36,6 @@ export class AppGame extends LitElement {
 
   async firstUpdated() {
     const playerName = StorageService.getGamePlayerName() || '';
-    console.log('playerName', playerName);
     this.userData = StorageService.getUserData(playerName);
     this.setInternalVars();
   }
@@ -140,9 +112,7 @@ export class AppGame extends LitElement {
    * Renders autoclicks bough section
    */
   renderAutoClicksBought() {
-    return html`
-      <h2>Autoclicks bought: ${this.autoClicksBought}</h2>
-    `;
+    return html`<h2>Autoclicks bought: ${this.autoClicksBought}</h2>`;
   }
 
   render() {

@@ -18,12 +18,6 @@ export class PwaHeader extends LitElement {
   }
 
   render() {
-    return html`
-      <header>
-        <div id="back-button-block">
-          <h1>${this.title}</h1>
-        </div>
-      </header>
-    `;
+    return html`<header><div id="back-button-block"><h1>${this.title}</h1></div></header>`;
   }
 }

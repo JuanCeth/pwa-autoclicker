@@ -1,7 +1,7 @@
 export class StorageService {
     /**
      * Saves the user data in localStorage
-     * @param userData
+     * @param userData the data of the user
      */
     static saveUserData(userData: any) {
         const itemToSave = userData.name + 'Data'
@@ -10,7 +10,7 @@ export class StorageService {
 
     /**
      * Obtains the user data stored in localStorage
-     * @param userName
+     * @param userName the name of the user
      */
     static getUserData(userName: string) {
         const itemToGet = userName + 'Data';
@@ -20,7 +20,7 @@ export class StorageService {
 
     /**
      * Saves the name of the current player of the game
-     * @param gameUserName
+     * @param gameUserName the current player name
      */
     static saveGamePlayerName(gameUserName: string) {
         localStorage.setItem('gameUser', gameUserName);

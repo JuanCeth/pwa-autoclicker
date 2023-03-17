@@ -22,10 +22,6 @@ export class AppIndex extends LitElement {
   }
 
   firstUpdated() {
-    // this method is a lifecycle even in lit
-    // for more info check out the lit docs https://lit.dev/docs/components/lifecycle/
-
-    // For more info on using the @vaadin/router check here https://vaadin.com/router
     const router = new Router(this.shadowRoot?.querySelector('#routerOutlet'));
     router.setRoutes([
       // temporarily cast to any because of a Type bug with the router
@@ -47,12 +43,6 @@ export class AppIndex extends LitElement {
   }
 
   render() {
-    return html`
-      <div>
-        <main>
-          <div id="routerOutlet"></div>
-        </main>
-      </div>
-    `;
+    return html`<div><main><div id="routerOutlet"></div></main></div>`;
   }
 }
