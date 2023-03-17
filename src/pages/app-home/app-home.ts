@@ -34,7 +34,6 @@ export class AppHome extends LitElement {
     if (!this.pwaInputElement) {
       this.pwaInputElement = this.shadowRoot?.querySelector('pwa-input');
     }
-
     return this.pwaInputElement;
   }
 
@@ -56,25 +55,13 @@ export class AppHome extends LitElement {
     this.submitForm();
   }
 
-  getAllStoreddData() {
-    let values = []
-    let keys = Object.keys(localStorage)
-    let i = keys.length;
-
-    while ( i-- ) {
-      values.push( localStorage.getItem(keys[i]));
-    }
-    console.log('stored data', values);
-    return values;
-  }
-
   /**
    * Navigates to next step saving the actual data of the user
    */
   navigateToGame() {
-    this.getAllStoreddData();
-    const storedData = localStorage.getItem('userData') || '';
-    this.userData = JSON.parse(storedData)
+    const storedData = localStorage.getItem('userData') || '{ "name": "", "numberOfClicks": "0", "autoClicksBought": "0", "autoClickersCost": "0"}';
+    console.log('storedData', storedData);
+    this.userData = JSON.parse(storedData);
      const userDataToStore = {
        name: this.inputValue === this.userData.name ? this.userData.name : this.inputValue,
        numberOfClicks: this.inputValue === this.userData.name ? this.userData.numberOfClicks : 0,
