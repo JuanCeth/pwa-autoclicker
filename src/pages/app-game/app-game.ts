@@ -121,15 +121,6 @@ export class AppGame extends LitElement {
   }
 
   /**
-   * Renders autoclicks bough section
-   */
-  renderAutoClicksBought() {
-    return html`
-      <h2>Autoclicks bought: ${this.autoClicksBought}</h2>
-    `;
-  }
-
-  /**
    * Navigates to previous step saving the actual information
    */
   goBack() {
@@ -145,13 +136,22 @@ export class AppGame extends LitElement {
     Router.go(path);
   }
 
+  /**
+   * Renders autoclicks bough section
+   */
+  renderAutoClicksBought() {
+    return html`
+      <h2>Autoclicks bought: ${this.autoClicksBought}</h2>
+    `;
+  }
+
   render() {
     return html`
       <pwa-header></pwa-header>
       <div class="goBack-section">
             <pwa-button type="secondary" @pwa-button-click="${() => this.goBack()}">< Back</pwa-button>
       </div>
-      <div class="user-section"><h3>Hi ${this.userData.name}</h3></div>
+      <div class="user-section"><h3>Hi ${this.userData.name}!</h3></div>
       <div id="mainContainer">
         <h2>Number of clicks: ${this.numberOfClicks}</h2>
         ${this.autoClicksBought > 0 ? this.renderAutoClicksBought() : ''}

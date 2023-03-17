@@ -39,6 +39,7 @@ export const styles = css`
   .secondary {
     background-color: darkgrey;
     border: 2px solid black;
+    color: black;
     padding: 10px 20px;
   }
 `;
