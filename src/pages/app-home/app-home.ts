@@ -78,15 +78,6 @@ export class AppHome extends LitElement {
    */
   submitForm() {
     if(this.validateInput()) {
-      this.dispatchEvent(new CustomEvent('pwa-button-click',
-          {
-            bubbles: true,
-            composed: true,
-            detail: {
-              userName: this.inputValue
-            }
-          })
-      )
       this.navigateToGame();
     } else {
       this.inputElement.setValidationState('error', 'Required field, you must introduce a name');

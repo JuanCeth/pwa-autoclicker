@@ -1,27 +1,44 @@
-import { describe, expect } from '@jest/globals';
-// import { AppHome } from "../src/pages/app-home/app-home";
+import { describe, expect, test } from '@jest/globals';
+//import { fixture, html } from "@open-wc/testing";
+import { StorageService } from "../src/services/storage-service";
 
 describe('app-home page test', () => {
 
+    let element: any;
+
     beforeEach(async () => {
-        /*window.document.createElement('app-home');
-        const homeElement = window.document.querySelector('app-home');
-        const inputElement = homeElement?.shadowRoot?.querySelector('pwa-input');
-        inputElement?.setAttribute('value', 'Juan');
-        console.log('homeElement', window.document.createElement('app-home'));
-        console.log('homeElement', homeElement);
-        console.log('inputElement', inputElement);
-        //console.log("element", window.document.querySelector('app-home').innerHTML);*/
+        /*element = await fixture(html`<app-home></app-home>`);
+        await element.updateComplete;*/
     });
 
-    xtest('should load ', () => {
-        const homeElement = window.document.createElement('app-home');
-        const inputElement = window.document.createElement('pwa-input');
-        homeElement.appendChild(inputElement);
-        window.document.body.append(homeElement);
-        console.log('totalElement', document.body.outerHTML);
-        expect('string')
-            .toBe('string');
+    test('should load all page with the correct components', async () => {
+        /*const headerElement = element.shadowRoot.querySelector('pwa-header');
+        const goBackSection = element.shadowRoot.querySelector('.goBack-section');
+        const userSection = element.shadowRoot.querySelector('.user-section');
+        const numberOfClickSection = element.shadowRoot.querySelector('h2');
+        const buttonElement = element.shadowRoot.querySelector('pwa-button');
+        expect(headerElement).toBeDefined();
+        expect(goBackSection).toBeDefined();
+        expect(userSection).toBeDefined();
+        expect(numberOfClickSection).toBeDefined();
+        expect(buttonElement).toBeDefined();*/
+    });
+
+    xtest('when clicking the button, should refresh the screen with the number of clicks', async () => {
+        const pwaButtonElement = element.shadowRoot.querySelectorAll('pwa-button')[1];
+        pwaButtonElement.click();
+        await element.updateComplete;
+        const numberOfClicksSection = element.shadowRoot.querySelector('h2');
+        expect(numberOfClicksSection.textContent).toBe('Number of clicks: 1');
+    });
+
+    xtest('when clicking the goBack button, should save the data and navigates to home page', async () => {
+        const goBackSection = element.shadowRoot.querySelector('.goBack-section');
+        const goBackButton = goBackSection.querySelector('pwa-button');
+        goBackButton.click();
+        await element.updateComplete;
+
+        expect(StorageService.getUserData).toBe('Number of clicks: 1');
     });
 
 });
