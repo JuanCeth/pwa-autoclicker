@@ -17,11 +17,13 @@
       "forceConsistentCasingInFileNames": true,
       "useDefineForClassFields": false,
       "isolatedModules": true,
+      "allowJs": true,
       "types": [
           "vite-plugin-pwa/client",
-          "vite/client"
+          "vite/client",
+          "jest"
       ]
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "node_modules/@open-wc/**/*.js"],
   "exclude": ["node_modules"]
 }
