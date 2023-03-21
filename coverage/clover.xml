@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1679334611465" clover="3.2.0">
-  <project timestamp="1679334611465" name="All files">
+<coverage generated="1679400008478" clover="3.2.0">
+  <project timestamp="1679400008478" name="All files">
     <metrics statements="12" coveredstatements="12" conditionals="2" coveredconditionals="2" methods="6" coveredmethods="6" elements="20" coveredelements="20" complexity="0" loc="12" ncloc="12" packages="1" files="2" classes="2"/>
     <file name="game-service.ts" path="/Users/jntn/Development/bbva/pwa-autoclicker/src/services/game-service.ts">
       <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
