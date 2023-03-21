@@ -9,7 +9,7 @@ import { StorageService } from "../../services/storage-service";
 @customElement('app-home')
 export class AppHome extends LitElement {
   /**
-   * Prop to set the input value of the component
+   * Prop to set the input value of the page.
    */
   @property({ type: String, reflect: true }) inputValue = '';
 
@@ -22,10 +22,6 @@ export class AppHome extends LitElement {
 
   constructor() {
     super();
-  }
-
-  async firstUpdated() {
-    console.log('This is the home page');
   }
 
   /**

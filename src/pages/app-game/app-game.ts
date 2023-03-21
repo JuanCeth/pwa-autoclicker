@@ -1,14 +1,13 @@
 import { LitElement, html } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 import { styles } from './app-game-styles';
-import {Router} from "@vaadin/router";
+import { Router } from "@vaadin/router";
 import { GameService } from '../../services/game-service';
 import { StorageService } from '../../services/storage-service';
 
 
 @customElement('app-game')
 export class AppGame extends LitElement {
-
   /**
    * Prop to set the number of clicks in the button
    */
@@ -41,7 +40,7 @@ export class AppGame extends LitElement {
   }
 
   /**
-   * Sets the internal variables to be able to apply the correct logic
+   * Sets the internal variables to be able to apply the correct logic in the page.
    */
   setInternalVars() {
     this.numberOfClicks = this.userData.numberOfClicks;
@@ -93,7 +92,7 @@ export class AppGame extends LitElement {
   }
 
   /**
-   * Navigates to previous step saving the actual information
+   * Navigates to previous step saving the actual info of the game.
    */
   goBack() {
     this.userData = {

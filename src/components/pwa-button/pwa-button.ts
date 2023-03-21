@@ -5,11 +5,11 @@ import { styles } from './pwa-button-styles';
 @customElement('pwa-button')
 export class PwaButton extends LitElement {
     /**
-     * Prop to set the type of the button, primary or secondary
+     * Prop to set the type of the button, primary or secondary.
      */
     @property({ type: String, reflect: true }) type = 'primary';
     /**
-     * Prop to set if the button is disabled or not
+     * Prop to set if the button state is disabled or not
      */
     @property({ type: Boolean, reflect: true }) disabled = false;
 
@@ -22,7 +22,7 @@ export class PwaButton extends LitElement {
     }
 
     /**
-     * Handles the click in the component dispatching an event
+     * Handles the click in the component dispatching an event.
      * @param event customEvent
      */
     handleClick(event: CustomEvent) {
