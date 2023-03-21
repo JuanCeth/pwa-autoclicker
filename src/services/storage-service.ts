@@ -14,7 +14,7 @@ export class StorageService {
      */
     static getUserData(userName: string) {
         const itemToGet = userName + 'Data';
-        const item = localStorage.getItem(itemToGet) || '{ "name": "", "numberOfClicks": "0", "autoClicksBought": "0", "autoClickersCost": "0"}';
+        const item = localStorage.getItem(itemToGet) || '{ "name": "", "numberOfClicks": 0, "autoClicksBought": 0, "autoClickersCost": 0}';
         return JSON.parse(item);
     }
 
