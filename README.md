@@ -27,8 +27,7 @@ Once you are placed in the repo folder, you can execute the following commands:
 
 ## Others
 
-- The app have 2 pages: home and game page, as the main views/routes of the app.
--The app have reusable lit components like: pwa-button, pwa-header or pwa-input. 
-
+- The app have 2 pages: home and game page, as the main views/routes of the app. 
+- The app have reusable lit components like: pwa-button, pwa-header or pwa-input.
 - Unit Tests of the app are configured with Jest. By the moment it is not possible to use the utilities provided by the @open-wc/testing
   library as there are several compatibility problems between libraries using javascript and typescript that have not yet been resolved.
