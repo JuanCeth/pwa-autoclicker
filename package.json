@@ -16,6 +16,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@open-wc/testing": "^3.1.7",
     "@pwabuilder/pwainstall": "^1.6.7",
     "@vaadin/router": "^1.7.4",
     "jest-environment-jsdom": "^29.5.0",
